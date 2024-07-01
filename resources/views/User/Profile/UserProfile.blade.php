@@ -11,12 +11,14 @@
         <aside class="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
             <div class="sticky flex flex-col gap-2 p-4 text-sm border-r border-indigo-100 top-12">
                 <h2 class="pl-3 mb-4 text-2xl font-semibold">Settings</h2>
-                <a href="#"
+                <a href="{{ route('user.profile') }}"
                     class="flex items-center px-3 py-2.5 font-bold bg-white  text-indigo-900 border rounded-full">
+                    <i class="fa-solid fa-user px-2"></i>
                     Pubic Profile
                 </a>
-                <a href="#"
+                <a href="{{ route('user.password') }}"
                     class="flex items-center px-3 py-2.5 font-semibold hover:text-indigo-900 hover:border hover:rounded-full  ">
+                    <i class="fa-solid fa-lock px-2"></i>
                     Change Password
                 </a>
                 {{-- <a href="#"
@@ -32,8 +34,7 @@
                     <div class="grid max-w-2xl mx-auto mt-8">
                         <div class="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
                             <img class="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-                                alt="Bordered avatar">
+                                src="{{ asset('storage/' . auth()->user()->profile) }}" alt="Bordered avatar">
                             <div class="flex flex-col space-y-5 sm:ml-8">
                                 <button type="button"
                                     class="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
@@ -107,7 +108,8 @@
                                         <input type="text" id="cell_phone"
                                             class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                                             name="cell_phone" placeholder="Cell Phone"
-                                            value="{{ auth()->user()->cell_phone }}" required>
+                                            value="{{ auth()->user()->cell_phone }}" data-parsley-pattern="^\d{10}$"
+                                            data-parsley-pattern-message="Invalid phone number. Please enter a 10-digit number.">
                                     </div>
                                 </div>
                                 <div class="mb-2 sm:mb-6">
@@ -119,8 +121,8 @@
                                         name="address" placeholder="Vadodara" value="{{ auth()->user()->address }}"
                                         data-parsley-pattern="^[a-zA-Z0-9\s\.,&#39;-]*$"
                                         data-parsley-pattern-message="Please enter valid address"
-                                        data-parsley-required="true"
-                                        data-parsley-required-message="Address is required." required>
+                                        data-parsley-required="true" data-parsley-required-message="Address is required."
+                                        required>
                                 </div>
                                 <div class="flex justify-end">
                                     <button type="submit"

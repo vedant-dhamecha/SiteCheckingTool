@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Hash;
 
 class UserProfileController extends Controller
 {
@@ -22,5 +25,24 @@ class UserProfileController extends Controller
         $admin->address = $request->input('address');
         $admin->save();
         return redirect()->route('user.profile');
+    }
+    public function changepassword(){
+        return view('User.Profile.UserPassword');
+    }
+    public function updatepassword(Request $request){
+        $admin = Auth::user();
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword()],
+            'new_password' => ['required','min:8'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+
+        if (Hash::check($request->current_password, $admin->password)) {
+            User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+            return redirect()->route('user.password');
+
+        } else {
+            return redirect()->back()->with('message', 'Old Password does not match with entered password');
+        }
     }
 }
