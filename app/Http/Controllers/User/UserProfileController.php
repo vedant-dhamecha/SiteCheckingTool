@@ -45,4 +45,19 @@ class UserProfileController extends Controller
             return redirect()->back()->with('message', 'Old Password does not match with entered password');
         }
     }
+    public function deleteprofile(Request $request)
+    {
+        $admin = Auth::user();
+
+        $profilePath = public_path('storage/' . $admin->profile);
+        if ($admin->profile) {
+            if (file_exists($profilePath)) {
+                unlink($profilePath);
+            }
+        }
+        $admin->profile = null;
+        $admin->save();
+
+        return redirect()->route('user.profile');
+    }
 }

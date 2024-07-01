@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
     <!--font awesoem for icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    </link>
 
     <nav class="bg-gray-800">
         <div class="mx-auto px-2 sm:px-6 lg:px-8">
@@ -73,9 +74,13 @@
                                     {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</div>
                                 <span class="absolute -inset-1.5"></span>
                                 <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full"
-                                    src="{{ asset('storage/' . auth()->user()->profile) }}"
-                                    alt="">
+                                @if (!auth()->user()->profile)
+                                    <img class="h-8 w-8 rounded-full" src="{{ asset('images/user.jpg') }}"
+                                        alt="Default user avatar">
+                                @else
+                                    <img class="h-8 w-8 rounded-full"
+                                        src="{{ asset('storage/' . auth()->user()->profile) }}" alt="">
+                                @endif
                             </button>
                         </div>
                         <div class="absolute left-1 sm:left-2 z-10 mt-3 w-44 origin-top-right rounded-sm bg-gray-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -84,6 +89,9 @@
                             <a href="{{ route('user.profile') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
                                 tabindex="-1">Your Profile</a>
+                            <a href="{{ route('user.password') }}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
+                                tabindex="-1">Change Password</a>
                             {{-- <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700"
                                 role="menuitem" tabindex="-1">Site Settings</a> --}}
                             <a href="{{ route('user.logout') }}"

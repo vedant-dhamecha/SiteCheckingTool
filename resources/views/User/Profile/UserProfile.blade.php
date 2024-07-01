@@ -33,17 +33,28 @@
                     <h2 class="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
                     <div class="grid max-w-2xl mx-auto mt-8">
                         <div class="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
-                            <img class="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-                                src="{{ asset('storage/' . auth()->user()->profile) }}" alt="Bordered avatar">
+                            @if (!auth()->user()->profile)
+                                <img class="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
+                                    src="{{ asset('images/user.jpg') }}" alt="Default user avatar">
+                            @else
+                                <img class="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
+                                    src="{{ asset('storage/' . auth()->user()->profile) }}"
+                                    alt="Bordered avatar">
+                            @endif
                             <div class="flex flex-col space-y-5 sm:ml-8">
                                 <button type="button"
                                     class="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
                                     Change picture
                                 </button>
-                                <button type="button"
+                                <form id="deleteProfileForm"
+                                    action="{{ route('user.profilepicture.delete') }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
                                     class="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
                                     Delete picture
                                 </button>
+                                </form>
+
                             </div>
                         </div>
                         <form action="{{ route('user.profile.update') }}" novalidate="" id="profileForm"

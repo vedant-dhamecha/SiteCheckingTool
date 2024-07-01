@@ -28,6 +28,9 @@ Route::get('user/logout',[UserDashboardController::class,'logout'])->name('user.
 
 Route::get('user/profile',[UserProfileController::class,'index'])->middleware('auth')->name('user.profile');
 Route::post('user/profile/update',[UserProfileController::class,'update'])->middleware('auth')->name('user.profile.update');
+
 Route::post('user/profile-picture/update',[UserProfileController::class,'updateprofile'])->middleware('auth')->name('user.profilepicture.update');
+Route::post('/user/profile-picture/delete', [UserProfileController::class, 'deleteprofile'])->middleware('auth')->name('user.profilepicture.delete');
+
 Route::get('user/password',[UserProfileController::class,'changepassword'])->middleware('auth')->name('user.password');
 Route::post('user/password/update',[UserProfileController::class,'updatepassword'])->middleware('auth')->name('user.password.update');
