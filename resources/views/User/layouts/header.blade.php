@@ -1,4 +1,17 @@
 <header>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Parsley.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+    <!-- Include Parsley CSS (optional, for better styling) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.css">
+
     <nav class="bg-gray-800">
         <div class="mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
@@ -22,7 +35,8 @@
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
-                            <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                            <a href="{{ route('user.dashboard') }}"
+                                class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                                 aria-current="page">Dashboard</a>
                             <a href="#"
                                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
@@ -50,7 +64,8 @@
                             <button type="button"
                                 class="relative flex items-center rounded-full bg-gray-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleMenu()">
-                                <div class="text-white mr-3">{{ Auth::user()->name }}</div>
+                                <div class="text-white mr-3">
+                                    {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</div>
                                 <span class="absolute -inset-1.5"></span>
                                 <span class="sr-only">Open user menu</span>
                                 <img class="h-8 w-8 rounded-full"
@@ -61,10 +76,11 @@
                         <div class="absolute left-1 sm:left-2 z-10 mt-3 w-44 origin-top-right rounded-sm bg-gray-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
                             id="user-menu" style="display: none;">
-                            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-                                role="menuitem" tabindex="-1">Your Profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-                                role="menuitem" tabindex="-1">Settings</a>
+                            <a href="{{ route('user.profile') }}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
+                                tabindex="-1">Your Profile</a>
+                            {{-- <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700"
+                                role="menuitem" tabindex="-1">Site Settings</a> --}}
                             <a href="{{ route('user.logout') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
                                 tabindex="-1">Sign out</a>

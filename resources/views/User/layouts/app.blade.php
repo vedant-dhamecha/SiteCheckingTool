@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    @include('user.dashboard.layouts.header')
+    @include('user.layouts.header')
     <main>
         @yield('content')
     </main>
-    @include('user.dashboard.layouts.footer')
+    @include('user.layouts.footer')
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserLoginController;
+use App\Http\Controllers\User\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('user/login', [UserLoginController::class,'index'])->name('user.login');
 Route::post('user/post-login', [UserLoginController::class, 'postLogin'])->name('user.login.post');
 
-Route::get('user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard')->middleware('auth');
+Route::get('user/dashboard', [UserDashboardController::class, 'index'])->middleware('auth')->name('user.dashboard');
 Route::get('user/logout',[UserDashboardController::class,'logout'])->name('user.logout');
 
+Route::get('user/profile',[UserProfileController::class,'index'])->middleware('auth')->name('user.profile');
+Route::post('user/profile/update',[UserProfileController::class,'update'])->middleware('auth')->name('user.profile.update');
