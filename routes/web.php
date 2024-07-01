@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('user/login',[UserLoginController::class,'index'])->name('user.login');
+Route::get('user/login', [UserLoginController::class,'index'])->name('user.login');
 Route::post('user/post-login', [UserLoginController::class, 'postLogin'])->name('user.login.post');
-Route::get('user/dashboard',[UserDashboardController::class,'index'])->name('user.dashboard')->middleware('auth');;
+
+Route::get('user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard')->middleware('auth');
+Route::get('user/logout',[UserDashboardController::class,'logout'])->name('user.logout');
+

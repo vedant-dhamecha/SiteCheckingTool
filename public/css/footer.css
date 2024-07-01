@@ -1,0 +1,18 @@
+#main-footer {
+    position: fixed;
+    right: 10px;
+    bottom: 0;
+    background-color: rgba(24, 24, 24, 0.8); /* semi-transparent background */
+    padding: 0rem; /* Add some padding */
+    z-index: 1000; /* Ensure it is on top */
+    color: #ccc;
+    text-align: right;
+    font-size: 0.6rem;
+    height:40px;
+    width: 365px;
+  }
+
+  #main-footer a {
+    color: #f96816;
+    text-decoration: underline;
+  }

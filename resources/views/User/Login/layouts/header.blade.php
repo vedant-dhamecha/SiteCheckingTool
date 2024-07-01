@@ -3,4 +3,5 @@
         <!-- nav code here -->
     </nav>
     <link rel="stylesheet" href="{{ asset('css/userlogin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 </header>
