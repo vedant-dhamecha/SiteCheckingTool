@@ -12,9 +12,4 @@ class UserDashboardController extends Controller
     public function index(){
         return view('User.Dashboard.Dashboard');
     }
-    public function logout(){
-        Session::flush();
-        Auth::logout();
-        return redirect()->route('user.login');
-    }
 }
