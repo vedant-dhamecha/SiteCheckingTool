@@ -86,7 +86,7 @@
                             id="user-menu" style="display: none;">
                             <a href="{{ route('user.profile') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
-                                tabindex="-1">Your Profile</a>
+                                tabindex="-1">Profile</a>
                             <a href="{{ route('user.password') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
                                 tabindex="-1">Change Password</a>
