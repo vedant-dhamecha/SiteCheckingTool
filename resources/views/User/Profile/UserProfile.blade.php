@@ -5,6 +5,39 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
+
+        /* Custom CSS for modal animation */
+        .modal.fade .modal-dialog {
+            transition: transform 0.3s ease-out;
+            transform: translateY(-100%);
+        }
+
+        .modal.fade.show .modal-dialog {
+            transform: translateY(0);
+        }
+
+        /* Modal position and overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1050;
+            /* Ensure higher than other content */
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent overlay */
+            z-index: 1040;
+            /* Below modal but above other content */
+        }
     </style>
 
     <div class="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
@@ -38,21 +71,21 @@
                                     src="{{ asset('images/user.jpg') }}" alt="Default user avatar">
                             @else
                                 <img class="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-                                    src="{{ asset('storage/' . auth()->user()->profile) }}"
-                                    alt="Bordered avatar">
+                                    src="{{ asset('storage/' . auth()->user()->profile) }}" alt="Bordered avatar">
                             @endif
                             <div class="flex flex-col space-y-5 sm:ml-8">
                                 <button type="button"
-                                    class="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
+                                    class="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 "
+                                    id="changePictureBtn">
                                     Change picture
                                 </button>
-                                <form id="deleteProfileForm"
-                                    action="{{ route('user.profilepicture.delete') }}" method="POST">
+                                <form id="deleteProfileForm" action="{{ route('user.profilepicture.delete') }}"
+                                    method="POST">
                                     @csrf
                                     <button type="submit"
-                                    class="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
-                                    Delete picture
-                                </button>
+                                        class="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
+                                        Delete picture
+                                    </button>
                                 </form>
 
                             </div>
@@ -146,12 +179,126 @@
             </div>
         </main>
     </div>
+
+    <!-- Modal for image cropping -->
+    <div class="modal fade" id="pic-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-container bg-white md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left">
+
+                <div class="pt-4 pb-6">
+                    <div class="flex justify-between">
+                        <p class="text-xl font-bold px-12">Crop &amp; Upload</p>
+                        <div class="flex justify-end mr-3">
+                            <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body formControl-white modal-buildingMatrix">
+                    <div class="row g-lg-4 g-3">
+                        <div class="col-md-12 text-center">
+                            <div class="col-md-12 text-center">
+                                <div id="upload-demo" style="width: 450px; height: 400px; margin: auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-4 bg-purple-700 py-2 ml-3 rounded-lg text-white hover:bg-purple-500 upload-result">Save</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="profile" style="display: none;" accept="image/*">
     <script>
         $(document).ready(function() {
+            // Initialize Parsley validation
             $('#profileForm').parsley({
                 errorsWrapper: '<div class="text-red-600 text-sm"></div>',
                 errorTemplate: '<span></span>'
             });
+
+            // Initialize Croppie for image cropping
+            var $uploadCrop = $('#upload-demo').croppie({
+                enableExif: true,
+                viewport: {
+                    width: 300,
+                    height: 300,
+                    type: 'circle',
+                },
+                boundary: {
+                    width: 350,
+                    height: 350
+                },
+            });
+
+            // Show modal when change picture button is clicked
+            $('#changePictureBtn').on('click', function() {
+                $('#profile').click();
+            });
+
+            // Handle image selection and show modal
+            $('#profile').on('change', function() {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $uploadCrop.croppie('bind', {
+                        url: e.target.result,
+                    }).then(function() {
+                        $('#pic-modal').modal({
+                            backdrop: 'static', // Prevent closing by clicking outside
+                            keyboard: false // Prevent closing by pressing escape key
+                        });
+                        $('.cr-slider').attr('min', 0.2).attr('max', 1.0);
+                    });
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            // Handle crop and upload
+            $('.upload-result').on('click', function(ev) {
+                $uploadCrop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(resp) {
+                    $.ajax({
+                        url: "{{ route('user.profilepicture.update') }}",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "image": resp
+                        },
+                        success: function(data) {
+                            localStorage.setItem('showSweetAlert', 'true');
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+
+            // Check and show SweetAlert on successful update
+            if (localStorage.getItem('showSweetAlert') === 'true') {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    title: 'Profile Picture Updated Successfully',
+                    animation: false,
+                    position: 'bottom-right',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+
+                localStorage.removeItem('showSweetAlert');
+            }
         });
     </script>
+
 @endsection

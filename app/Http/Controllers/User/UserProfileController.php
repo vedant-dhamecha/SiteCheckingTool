@@ -26,6 +26,43 @@ class UserProfileController extends Controller
         $admin->save();
         return redirect()->route('user.profile');
     }
+    public function updateprofilepicture(Request $request)
+    {
+        $data = $request->image;
+
+        list($type, $data) = explode(';', $data);
+        list(, $data)      = explode(',', $data);
+        $data = base64_decode($data);
+        $image_name = time() . '.png';
+        $path = public_path() . "/storage/profiles/" . $image_name;
+        file_put_contents($path, $data);
+
+        $admin = Auth::user();
+        $profilePath = public_path('storage/' . $admin->profile);
+        if ($admin->profile) {
+            if (file_exists($profilePath)) {
+                unlink($profilePath);
+            }
+        }
+        $admin->profile = "profiles/" . $image_name;
+        $admin->save();
+    }
+    public function deleteprofilepicture(Request $request)
+    {
+        $admin = Auth::user();
+
+        $profilePath = public_path('storage/' . $admin->profile);
+        if ($admin->profile) {
+            if (file_exists($profilePath)) {
+                unlink($profilePath);
+            }
+        }
+        $admin->profile = null;
+        $admin->save();
+
+        return redirect()->route('user.profile');
+    }
+
     public function changepassword(){
         return view('User.Profile.UserPassword');
     }
@@ -45,19 +82,5 @@ class UserProfileController extends Controller
             return redirect()->back()->with('message', 'Old Password does not match with entered password');
         }
     }
-    public function deleteprofile(Request $request)
-    {
-        $admin = Auth::user();
 
-        $profilePath = public_path('storage/' . $admin->profile);
-        if ($admin->profile) {
-            if (file_exists($profilePath)) {
-                unlink($profilePath);
-            }
-        }
-        $admin->profile = null;
-        $admin->save();
-
-        return redirect()->route('user.profile');
-    }
 }
