@@ -5,6 +5,11 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
+        /* Custom styles for Parsley validation errors */
+        .parsley-errors-list {
+            color: #ff0000; /* Custom color */
+            font-size: 14px; /* Custom size */
+        }
     </style>
     <div class="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
         <aside class="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
@@ -12,12 +17,12 @@
                 <h2 class="pl-3 mb-4 text-2xl font-semibold">Settings</h2>
                 <a href="{{ route('admin.profile') }}"
                     class="flex items-center px-3 py-2.5 font-semibold hover:text-indigo-900 hover:border hover:rounded-full  ">
-                    <i class="fa-solid fa-user px-2"></i>
-                    Public Profile
+                    <i class="fa-solid fa-user px-2 mr-2"></i>
+                    Admin Profile
                 </a>
                 <a href="{{ route('admin.password') }}"
                     class="flex items-center px-3 py-2.5 font-bold bg-white  text-indigo-900 border rounded-full">
-                    <i class="fa-solid fa-lock px-2"></i>
+                    <i class="fa-solid fa-key px-2 mr-2"></i>
                     Change Password
                 </a>
             </div>

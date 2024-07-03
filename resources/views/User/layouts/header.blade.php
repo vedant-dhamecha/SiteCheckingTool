@@ -81,20 +81,20 @@
                                 @endif
                             </button>
                         </div>
-                        <div class="absolute left-1 sm:left-2 z-10 mt-3 w-44 origin-top-right rounded-sm bg-gray-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        <div class="absolute z-10 mt-3 w-44 origin-top-right rounded-sm bg-gray-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
                             id="user-menu" style="display: none;">
                             <a href="{{ route('user.profile') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
-                                tabindex="-1">Profile</a>
+                                tabindex="-1"><i class="fa-solid fa-user mr-2"></i>Profile</a>
                             <a href="{{ route('user.password') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
-                                tabindex="-1">Change Password</a>
+                                tabindex="-1"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
                             {{-- <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700"
                                 role="menuitem" tabindex="-1">Site Settings</a> --}}
                             <a href="{{ route('user.logout') }}"
                                 class="block px-4 py-2 text-sm text-white hover:bg-gray-700" role="menuitem"
-                                tabindex="-1">Sign out</a>
+                                tabindex="-1"><i class="fa-solid fa-right-from-bracket mr-2"></i>Sign out</a>
                         </div>
                     </div>
                 </div>

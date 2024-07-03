@@ -37,9 +37,9 @@
     </div>
 
     <div class="flex items-center">
-        <div class="text-blue-600 font-bold mr-3">
+        <button class="text-blue-600 font-bold mr-3" id="user-menu-button">
             {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
-        </div>
+        </button>
         <div x-data="{ dropdownOpen: false }" class="relative">
             <button id="user-menu-button"
                 class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none"
@@ -56,15 +56,15 @@
             <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
                 class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
                 style="display: none;" id="user-menu">
+                <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+                    role="menuitem"><i class="fa-solid fa-user mr-2"></i>Profile</a>
+                <a href="{{ route('admin.password') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+                    role="menuitem"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    role="menuitem">Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    role="menuitem">Change Password</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    role="menuitem">Site Settings</a>
+                    role="menuitem"><i class="fa-solid fa-gear mr-2"></i>Site Settings</a>
                 <a href="{{ route('admin.logout') }}"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    role="menuitem">Logout</a>
+                    role="menuitem"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
             </div>
         </div>
     </div>

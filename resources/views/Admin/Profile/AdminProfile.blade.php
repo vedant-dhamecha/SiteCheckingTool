@@ -51,7 +51,7 @@
                 </a>
                 <a href="{{ route('admin.password') }}"
                     class="flex items-center px-3 py-2.5 font-semibold hover:text-indigo-900 hover:border hover:rounded-full  ">
-                    <i class="fa-solid fa-lock px-2"></i>
+                    <i class="fa-solid fa-key px-2"></i>
                     Change Password
                 </a>
                 {{-- <a href="#"

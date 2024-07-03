@@ -17,7 +17,7 @@
                 </a>
                 <a href="{{ route('user.password') }}"
                     class="flex items-center px-3 py-2.5 font-bold bg-white  text-indigo-900 border rounded-full">
-                    <i class="fa-solid fa-lock px-2"></i>
+                    <i class="fa-solid fa-key px-2"></i>
                     Change Password
                 </a>
             </div>
