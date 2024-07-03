@@ -21,6 +21,10 @@
 
             <span class="mx-3">Dashboard</span>
         </a>
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 " href="{{ route('admin.manage.users') }}">
+            <i class="fa-solid fa-users w-6 h-6"></i>
+            <span class="mx-3">User Management</span>
+        </a>
 
         <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/ui-elements">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

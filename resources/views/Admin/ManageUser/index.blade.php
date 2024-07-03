@@ -121,6 +121,42 @@
                         next: '&gt;'
                     }
                 },
+                initComplete: function() {
+                var api = this.api();
+                api.columns([2, 3]).every(function() {
+                    var column = this;
+                    var input = $(
+                            '<input type="text" class="w-full mt-2 h-8 text-black pl-4 pr-4 rounded-md form-input focus:border-indigo-600 focus:ring-indigo-600 bg-white border border-gray-300" placeholder="Filter"/>'
+                        )
+                        .appendTo($(column.header()))
+                        .on('input', function() {
+                            shouldSort = false;
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                            column.search(val, true, false).draw();
+                        });
+                });
+                api.columns([4]).every(function() {
+                    var column = this;
+                    var select = $(
+                            '<select class="bg-gray-50 w-32 mt-2 h-8 text-black pl-4 pr-4 rounded-md form-input focus:border-indigo-600 focus:ring-indigo-600 bg-white border border-gray-300"><option value="">All</option></select>'
+                        )
+                        .appendTo($(column.header()))
+                        .on('change', function() {
+                            shouldSort = false;
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                            if (val === '') {
+                                column.search('').draw();
+                            } else {
+                                var regex = '^' + val + '$';
+                                column.search(regex, true, false).draw();
+                            }
+                        });
+                    column.data().unique().sort().each(function(d, j) {
+                        select.append('<option value="' + d + '">' + d +
+                            '</option>');
+                    });
+                });
+            }
             });
         });
     </script>
