@@ -15,6 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
     <!--font awesoem for icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
     <div class="flex items-center">
         <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,9 +59,11 @@
             <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
                 class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
                 style="display: none;" id="user-menu">
-                <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+                <a href="{{ route('admin.profile') }}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
                     role="menuitem"><i class="fa-solid fa-user mr-2"></i>Profile</a>
-                <a href="{{ route('admin.password') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+                <a href="{{ route('admin.password') }}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
                     role="menuitem"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
                     role="menuitem"><i class="fa-solid fa-gear mr-2"></i>Site Settings</a>

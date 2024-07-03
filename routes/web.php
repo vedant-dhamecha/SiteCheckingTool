@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\UserManageTableController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserLoginController;
 use App\Http\Controllers\User\UserProfileController;
@@ -54,3 +55,6 @@ Route::post('admin/password/update', [AdminProfileController::class,'updatepassw
 
 Route::post('admin/profile-picture/update', [AdminProfileController::class,'updateprofilepicture'])->middleware('admin')->name('admin.profilepicture.update');
 Route::post('admin/profile-picture/delete', [AdminProfileController::class, 'deleteprofilepicture'])->middleware('admin')->name('admin.profilepicture.delete');
+
+Route::get('admin/manage/users/list',[UserManageTableController::class,'UserList'])->name('admin.manage.users.list');
+Route::get('admin/manage/users',[UserManageTableController::class,'index'])->name('admin.manage.users');
