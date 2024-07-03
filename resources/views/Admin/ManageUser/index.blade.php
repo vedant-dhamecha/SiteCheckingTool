@@ -37,7 +37,7 @@
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
                                 Email</th>
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
-                                Role Id</th>
+                                Role</th>
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
                                 Created At</th>
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
@@ -97,8 +97,8 @@
                         orderable: false,
                     },
                     {
-                        data: 'role_id',
-                        name: 'role_id',
+                        data: 'role_name',
+                        name: 'role_name',
                         orderable: false,
                     },
                     {

@@ -13,8 +13,9 @@ class UserManageTableController extends Controller
 {
     $authenticatedUserId = Auth::id();
 
-    return datatables()->of(User::where('id', '!=', $authenticatedUserId)
-                            ->select('id', 'profile', 'name', 'email', 'role_id', 'created_at'))
+    return datatables()->of(User::where('users.id', '!=', $authenticatedUserId)
+                            ->join('roles', 'users.role_id', '=', 'roles.role_id')
+                            ->select('users.id', 'users.profile', 'users.name', 'users.email', 'roles.role_name', 'users.created_at'))
         ->editColumn('created_at', function ($user) {
             return $user->created_at->format('d-m-Y H:i');
         })
@@ -27,6 +28,7 @@ class UserManageTableController extends Controller
         ->addIndexColumn()
         ->make(true);
 }
+
     public function index(Request $request)
     {
         return view('Admin.ManageUser.index');
