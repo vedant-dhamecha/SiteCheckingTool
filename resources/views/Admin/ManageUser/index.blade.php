@@ -120,7 +120,7 @@
                         previous: '&lt;',
                         next: '&gt;'
                     }
-                }
+                },
             });
         });
     </script>
