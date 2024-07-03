@@ -8,14 +8,14 @@
                 <h1 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-users mr-5 ml-8"></i>Manage Users</h1>
                 <div class="flex justify-end">
                     <button
-                        class="px-6 py-3 bg-red-600 rounded-md text-white font-medium tracking-wide hover:bg-red-500 ml-auto">
-                        <i class="fa-solid fa-trash mr-3"></i>
-                        <span>Delete Selected</span>
+                        class="px-6 py-3 bg-blue-600 rounded-md text-white font-medium tracking-wide hover:bg-blue-500  ml-auto">
+                        <i class="fa-solid fa-user-plus mr-3"></i>
+                        <span class="font-plus-jakarta-sans">Add New</span>
                     </button>
                     <button
-                        class="px-6 py-3 bg-blue-600 rounded-md text-white font-medium tracking-wide hover:bg-blue-500 ml-3">
-                        <i class="fa-solid fa-user-plus mr-3"></i>
-                        <span>Add New User</span>
+                        class="px-6 py-3 bg-red-600 rounded-md text-white font-medium tracking-wide hover:bg-red-500 ml-3">
+                        <i class="fa-solid fa-trash mr-3"></i>
+                        <span class="font-plus-jakarta-sans">Delete Selected</span>
                     </button>
                 </div>
             </section>
@@ -80,8 +80,10 @@
                         name: 'profile',
                         orderable: false,
                         render: function(data, type, full, row) {
-                            var imagePath = data ? '/storage/' + data : '{{ asset('images/user.jpg') }}';
-                            return '<img class="object-cover w-10 h-10" src="' + imagePath + '" alt="User avatar">';
+                            var imagePath = data ? '/storage/' + data :
+                                '{{ asset('images/user.jpg') }}';
+                            return '<img class="object-cover w-10 h-10" src="' + imagePath +
+                                '" alt="User avatar">';
                         }
                     },
                     {
@@ -115,9 +117,9 @@
                 pagingType: 'simple_numbers',
                 language: {
                     paginate: {
-                    previous: '&lt;',
-                    next: '&gt;'
-                }
+                        previous: '&lt;',
+                        next: '&gt;'
+                    }
                 }
             });
         });
