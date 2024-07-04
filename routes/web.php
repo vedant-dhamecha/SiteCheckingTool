@@ -56,5 +56,6 @@ Route::post('admin/password/update', [AdminProfileController::class,'updatepassw
 Route::post('admin/profile-picture/update', [AdminProfileController::class,'updateprofilepicture'])->middleware('admin')->name('admin.profilepicture.update');
 Route::post('admin/profile-picture/delete', [AdminProfileController::class, 'deleteprofilepicture'])->middleware('admin')->name('admin.profilepicture.delete');
 
-Route::get('admin/manage/users/list',[UserManageTableController::class,'UserList'])->name('admin.manage.users.list');
-Route::get('admin/manage/users',[UserManageTableController::class,'index'])->name('admin.manage.users');
+Route::get('admin/manage/users/list', [UserManageTableController::class,'UserList'])->middleware('admin')->name('admin.manage.users.list');
+Route::get('admin/manage/users', [UserManageTableController::class,'index'])->middleware('admin')->name('admin.manage.users');
+Route::post('admin/manage/users/store', [UserManageTableController::class, 'store'])->middleware('admin')->name('admin.manage.users.store');

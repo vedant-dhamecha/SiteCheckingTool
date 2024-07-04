@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Role;
 
 class UserManageTableController extends Controller
 {
@@ -41,10 +43,53 @@ class UserManageTableController extends Controller
                 })
                 ->make(true);
     }
-
-
     public function index(Request $request)
     {
-        return view('Admin.ManageUser.index');
+        $roles = Role::all()->toArray();
+        return view('Admin.ManageUser.index', ['roles' => $roles]);
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request);
+        $userId = $request->id;
+        // dd($userId);
+        // Validation rules
+        $rules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'role_id' => 'required',
+            'email' => 'required|unique:users,email' . ($userId ? ",$userId" : ''),
+            'home_phone' => 'required',
+            'address' => 'required',
+        ];
+        // Skip password validation if not provided
+        if (!$request->password) {
+            unset($rules['password']);
+        }
+        $request->validate($rules);
+
+        $userData = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'role_id' => $request->role_id,
+            'email' => $request->email,
+            'password' => $request->password,
+            'home_phone' => $request->home_phone,
+            'cell_phone' => $request->cell_phone,
+            'address' => $request->address,
+        ];
+
+        if (isset($userData['first_name']) && isset($userData['last_name'])) {
+            $userData['name'] = trim($userData['first_name'] . ' ' . $userData['last_name']);
+        }
+
+        if (!$request->password) {
+            User::updateOrCreate(['id' => $userId], $userData);
+        } else {
+            User::updateOrCreate(['id' => $userId], array_merge($userData, ['password' => Hash::make($request->password)]));
+        }
+
+        return redirect()->route('admin.manage.users');
     }
 }

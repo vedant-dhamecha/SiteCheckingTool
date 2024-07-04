@@ -87,7 +87,6 @@
                                         Delete picture
                                     </button>
                                 </form>
-
                             </div>
                         </div>
                         <form action="{{ route('admin.profile.update') }}" novalidate="" id="profileForm"
@@ -162,7 +161,7 @@
                                         Address<span class="text-red-500">*</span></label>
                                     <input type="text" id="address"
                                         class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                        name="address" placeholder="Vadodara" value="{{ auth()->user()->address }}"
+                                        name="address" placeholder="Address" value="{{ auth()->user()->address }}"
                                         data-parsley-pattern="^[a-zA-Z0-9\s\.,&#39;-]*$"
                                         data-parsley-pattern-message="Please enter valid address"
                                         data-parsley-required="true" data-parsley-required-message="Address is required."
@@ -189,7 +188,8 @@
                     <div class="flex justify-between">
                         <p class="text-xl font-bold px-12">Crop &amp; Upload</p>
                         <div class="flex justify-end mr-3">
-                            <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
+                            <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close"
+                                style="font-size: 1.5rem;">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -206,9 +206,9 @@
                     </div>
                 </div>
                 <div class="mt-4 flex justify-center">
-                    <button class="px-4 bg-purple-700 py-2 ml-3 rounded-lg text-white hover:bg-purple-500 upload-result">Save</button>
+                    <button
+                        class="px-4 bg-purple-700 py-2 ml-3 rounded-lg text-white hover:bg-purple-500 upload-result">Save</button>
                 </div>
-            </div>
             </div>
         </div>
     </div>
