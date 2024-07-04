@@ -104,7 +104,11 @@
                             </label>
                             <input type="text" id="first_name" name="first_name" placeholder="First Name"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required>
+                                data-parsley-required="true" data-parsley-required-message="Enter your first name."
+                                data-parsley-pattern="/^[A-Z][a-z]*$/"
+                                data-parsley-pattern-message="First letter must be capital."
+                                data-parsley-pattern-message-class="text-red-500"
+                                data-parsley-pattern-message="First name must contain only letters." required>
                         </div>
                         <div class="w-full">
                             <label for="last_name" class="block mb-1 text-sm font-medium text-indigo-900 dark:text-white">
@@ -112,7 +116,11 @@
                             </label>
                             <input type="text" id="last_name" name="last_name" placeholder="Last Name"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required>
+                                data-parsley-required="true" data-parsley-required-message="Enter your last name."
+                                data-parsley-pattern="/^[A-Z][a-z]*$/"
+                                data-parsley-pattern-message="First letter must be capital."
+                                data-parsley-pattern-message-class="text-red-500"
+                                data-parsley-pattern-message="Last name must contain only letters." required>
                         </div>
                     </div>
                     <div class="flex flex-col sm:flex-row sm:space-x-4">
@@ -122,7 +130,10 @@
                             </label>
                             <input type="email" id="email" name="email" placeholder="Email Address"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required>
+                                data-parsley-type="email" data-parsley-required="true"
+                                data-parsley-required-message="Enter your email address."
+                                data-parsley-pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i"
+                                data-parsley-pattern-message="Please enter a valid email address." required>
                         </div>
                         <div class="w-full">
                             <label for="role_id" class="block mb-1 text-sm font-medium text-indigo-900 dark:text-white">
@@ -148,7 +159,9 @@
                             </label>
                             <input type="password" id="password" name="password" placeholder="Password"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required>
+                                required data-parsley-minlength="8"
+                                data-parsley-minlength-message="Password must be at least 8 characters."
+                                data-parsley-required="true" data-parsley-required-message="Enter your password.">
                         </div>
                         <div class="w-full">
                             <label for="confirm_password"
@@ -158,7 +171,9 @@
                             <input type="password" id="confirm_password" name="confirm_password"
                                 placeholder="Confirm Password"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required>
+                                required data-parsley-equalto="#password"
+                                data-parsley-equalto-message="Password do not match." data-parsley-required="true"
+                                data-parsley-required-message="Enter your confirm password.">
                         </div>
                     </div>
                     <div
@@ -170,7 +185,19 @@
                             </label>
                             <input type="tel" id="home_phone" name="home_phone" placeholder="Home Phone"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                pattern="[0-9]{10}" maxlength="10" required>
+                                pattern="[0-9]{10}" maxlength="10" data-parsley-maxlength="10"
+                                data-parsley-maxlength-message="Home phone number must be 10 digits."
+                                data-parsley-pattern-message="Home phone number must be 10 digit number."
+                                data-parsley-required="true" data-parsley-required-message="Enter your home phone number."
+                                required
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                onkeydown="return ( event.ctrlKey || event.altKey
+                                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                    || (95<event.keyCode && event.keyCode<106)
+                                    || (event.keyCode==8 || event.keyCode==9
+                                        || event.keyCode==37 || event.keyCode==39 || event.keyCode==46)
+                                    )
+                                    && event.keyCode!=110">
                         </div>
                         <div class="w-full">
                             <label for="cell_phone"
@@ -178,7 +205,18 @@
                                 Cell Phone
                             </label>
                             <input type="tel" id="cell_phone" name="cell_phone" placeholder="Cell Phone"
-                                class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5">
+                                class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                                pattern="[0-9]{10}" maxlength="10" data-parsley-maxlength="10"
+                                data-parsley-maxlength-message="Cell phone number must be 10 digits."
+                                data-parsley-pattern-message="Cell phone number must be 10 digit number."
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                onkeydown="return ( event.ctrlKey || event.altKey
+                                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                    || (95<event.keyCode && event.keyCode<106)
+                                    || (event.keyCode==8 || event.keyCode==9
+                                        || event.keyCode==37 || event.keyCode==39 || event.keyCode==46)
+                                    )
+                                    && event.keyCode!=110">
                         </div>
                     </div>
                     <div class="mb-2 sm:mb-4">
@@ -187,7 +225,7 @@
                         </label>
                         <input type="text" id="address" name="address" placeholder="Address"
                             class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                            required>
+                            data-parsley-required="true" data-parsley-required-message="Enter your address.">
                     </div>
                     <div class="flex justify-end">
                         <button type="reset" id="btn-reset"
