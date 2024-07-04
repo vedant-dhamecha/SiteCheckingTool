@@ -34,7 +34,7 @@
                         <i class="fa-solid fa-user-plus mr-3"></i>
                         <span class="font-plus-jakarta-sans">Add New</span>
                     </button>
-                    <button
+                    <button onclick="deleteSelectedUser()"
                         class="px-6 py-3 bg-red-600 rounded-md text-white font-medium tracking-wide hover:bg-red-500 ml-3">
                         <i class="fa-solid fa-trash mr-3"></i>
                         <span class="font-plus-jakarta-sans">Delete Selected</span>
@@ -48,7 +48,7 @@
                         <tr>
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
                                 <div class="flex items-center">
-                                    <input type="checkbox"
+                                    <input type="checkbox" id="select-all-checkbox"
                                         class="w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 </div>
                             </th>
@@ -220,11 +220,12 @@
                 ajax: "{{ route('admin.manage.users.list') }}",
                 responsive: true,
                 columns: [{
-                        data: null,
+                        data: 'id',
                         orderable: false,
                         searchable: false,
                         render: function(data) {
-                            return '<input type="checkbox" class="w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500">';
+                            return '<input type="checkbox" class="checkbox w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500" data-id="' +
+                                data + '">';
                         }
                     },
                     {
@@ -419,6 +420,62 @@
                             oTable.fnDraw(false);
                         }
                     });
+                }
+            });
+        }
+        //all checkbox selection
+        $('#select-all-checkbox').on('click', function() {
+            var isChecked = $(this).prop('checked');
+            $('.checkbox').prop('checked', isChecked);
+        });
+
+        $('#users-table').on('click', '.checkbox', function() {
+            var isChecked = $(this).prop('checked');
+            if (!isChecked) {
+                $('#select-all-checkbox').prop('checked', false);
+            }
+        });
+        //multiple delete ajax
+        function deleteSelectedUser() {
+            var selectedIds = $('.checkbox:checked').map(function() {
+                return $(this).data('id');
+            }).get();
+            console.log(selectedIds);
+
+            if (selectedIds.length === 0) {
+                Swal.fire('Error!', 'Please select at least one record to delete.', 'error');
+                return;
+            }
+
+            Swal.fire({
+                title: '<strong>Sure want to delete selected data?</strong>',
+                icon: 'warning',
+                iconColor: '#d33',
+                html: '<span>This cannot be undone</span>',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: '<i class="fa-solid fa-check mr-2"></i> Yes',
+                confirmButtonColor: '#d33',
+                cancelButtonText: '<i class="fa-solid fa-xmark mr-5"></i>No',
+                cancelButtonAriaLabel: 'Thumbs down'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('admin.manage.users.delete-selected') }}",
+                        data: {
+                            ids: selectedIds
+                        },
+                        success: function(response) {
+                            $('#users-table').DataTable().ajax.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire('Cancelled', 'Your records are safe', 'error');
                 }
             });
         }

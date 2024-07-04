@@ -105,4 +105,15 @@ class UserManageTableController extends Controller
 
         return Response()->json($user);
     }
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('ids');
+        foreach ($ids as $id) {
+            $user = User::find($id);
+            if ($user) {
+                $user->delete();
+            }
+        }
+        return response()->json(['success' => true]);
+    }
 }
