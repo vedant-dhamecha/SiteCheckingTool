@@ -26,7 +26,7 @@ class UserManageTableController extends Controller
                 })
                 ->addColumn('action', function ($user) {
                     $btn = '<a onClick="editUserFunc('.$user->id.')" class="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
-                    $btn .= ' <a href="javascript:void(0)" class="delete"><i class="fa-solid fa-trash"></i></a>';
+                    $btn .= ' <a onClick="deleteUserFunc('.$user->id.')" class="delete"><i class="fa-solid fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -96,6 +96,12 @@ class UserManageTableController extends Controller
     {
         $where = array('id' => $request->id);
         $user  = User::where($where)->first();
+
+        return Response()->json($user);
+    }
+    public function destroy(Request $request)
+    {
+        $user = User::where('id', $request->id)->delete();
 
         return Response()->json($user);
     }

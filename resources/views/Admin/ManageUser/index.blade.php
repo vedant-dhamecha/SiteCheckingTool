@@ -391,6 +391,37 @@
                 }
             });
         }
+        //delete user ajax
+        function deleteUserFunc(id) {
+            Swal.fire({
+                title: '<strong>Sure want to delete?</strong>',
+                icon: 'warning',
+                iconColor: '#d33',
+                html: '<span>This cannot be undone</span>',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: '<i class="fa-solid fa-check mr-2"></i> Yes',
+                confirmButtonColor: '#d33',
+                cancelButtonText: '<i class="fa-solid fa-xmark mr-5"></i>No',
+                cancelButtonAriaLabel: 'Thumbs down'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('admin.manage.users.destroy') }}",
+                        data: {
+                            id: id
+                        },
+                        dataType: 'json',
+                        success: function(res) {
+                            var oTable = $('#users-table').dataTable();
+                            oTable.fnDraw(false);
+                        }
+                    });
+                }
+            });
+        }
     </script>
 
 @endsection

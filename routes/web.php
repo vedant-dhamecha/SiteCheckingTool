@@ -60,3 +60,4 @@ Route::get('admin/manage/users/list', [UserManageTableController::class,'UserLis
 Route::get('admin/manage/users', [UserManageTableController::class,'index'])->middleware('admin')->name('admin.manage.users');
 Route::post('admin/manage/users/store', [UserManageTableController::class, 'store'])->middleware('admin')->name('admin.manage.users.store');
 Route::post('admin/manage/users/edit', [UserManageTableController::class, 'edit'])->middleware('admin')->name('admin.manage.users.edit');
+Route::post('admin/manage/users/destroy', [UserManageTableController::class, 'destroy'])->middleware('admin')->name('admin.manage.users.destroy');
