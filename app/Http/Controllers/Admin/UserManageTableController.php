@@ -24,8 +24,8 @@ class UserManageTableController extends Controller
                 ->editColumn('created_at', function ($user) {
                     return $user->created_at->format('d-m-Y H:i');
                 })
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                ->addColumn('action', function ($user) {
+                    $btn = '<a onClick="editUserFunc('.$user->id.')" class="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
                     $btn .= ' <a href="javascript:void(0)" class="delete"><i class="fa-solid fa-trash"></i></a>';
                     return $btn;
                 })
@@ -91,5 +91,12 @@ class UserManageTableController extends Controller
         }
 
         return redirect()->route('admin.manage.users');
+    }
+    public function edit(Request $request)
+    {
+        $where = array('id' => $request->id);
+        $user  = User::where($where)->first();
+
+        return Response()->json($user);
     }
 }

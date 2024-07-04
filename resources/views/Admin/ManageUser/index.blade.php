@@ -1,7 +1,23 @@
 @extends('admin.layouts.app')
 @section('title', 'DevSync | Admin Dashboard')
 @section('content')
+    <style>
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50%);
+            }
 
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-down {
+            animation: fadeInDown 0.5s ease-out forwards;
+        }
+    </style>
     <main class="container mx-auto p-2">
         <div class="content">
             <section class="main-header flex justify-between items-center">
@@ -63,7 +79,7 @@
         aria-hidden="true">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl transform transition-all duration-500 ease-out opacity-0 translate-y-[-50%]"
             id="modal-content">
-            <div class="flex justify-between items-center p-5 border-b border-gray-200 mt-2 ">
+            <div class="flex justify-between items-center p-5 border-b border-gray-200 mt-2">
                 <h4 class="text-lg font-semibold text-gray-800" id="UserModal"><i class="fa-solid fa-user-plus mr-2"></i>
                     Add New User</h4>
                 <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none" onClick="closeModal()"
@@ -88,11 +104,7 @@
                             </label>
                             <input type="text" id="first_name" name="first_name" placeholder="First Name"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                data-parsley-required="true" data-parsley-required-message="Enter your first name."
-                                data-parsley-pattern="/^[A-Z][a-z]*$/"
-                                data-parsley-pattern-message="First letter must be capital."
-                                data-parsley-pattern-message-class="text-red-500"
-                                data-parsley-pattern-message="First name must contain only letters." required>
+                                required>
                         </div>
                         <div class="w-full">
                             <label for="last_name" class="block mb-1 text-sm font-medium text-indigo-900 dark:text-white">
@@ -100,11 +112,7 @@
                             </label>
                             <input type="text" id="last_name" name="last_name" placeholder="Last Name"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                data-parsley-required="true" data-parsley-required-message="Enter your last name."
-                                data-parsley-pattern="/^[A-Z][a-z]*$/"
-                                data-parsley-pattern-message="First letter must be capital."
-                                data-parsley-pattern-message-class="text-red-500"
-                                data-parsley-pattern-message="Last name must contain only letters." required>
+                                required>
                         </div>
                     </div>
                     <div class="flex flex-col sm:flex-row sm:space-x-4">
@@ -114,10 +122,7 @@
                             </label>
                             <input type="email" id="email" name="email" placeholder="Email Address"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                data-parsley-type="email" data-parsley-required="true"
-                                data-parsley-required-message="Enter your email address."
-                                data-parsley-pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i"
-                                data-parsley-pattern-message="Please enter a valid email address." required>
+                                required>
                         </div>
                         <div class="w-full">
                             <label for="role_id" class="block mb-1 text-sm font-medium text-indigo-900 dark:text-white">
@@ -125,7 +130,7 @@
                             </label>
                             <select id="role_id" name="role_id"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                data-parsley-required="true" data-parsley-required-message="Select role.">
+                                required>
                                 <option value="" class="text-gray-400">Select Role</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role['role_id'] }}"
@@ -143,9 +148,7 @@
                             </label>
                             <input type="password" id="password" name="password" placeholder="Password"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required data-parsley-minlength="8"
-                                data-parsley-minlength-message="Password must be at least 8 characters."
-                                data-parsley-required="true" data-parsley-required-message="Enter your password.">
+                                required>
                         </div>
                         <div class="w-full">
                             <label for="confirm_password"
@@ -155,9 +158,7 @@
                             <input type="password" id="confirm_password" name="confirm_password"
                                 placeholder="Confirm Password"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                required data-parsley-equalto="#password"
-                                data-parsley-equalto-message="Password do not match." data-parsley-required="true"
-                                data-parsley-required-message="Enter your confirm password.">
+                                required>
                         </div>
                     </div>
                     <div
@@ -169,19 +170,7 @@
                             </label>
                             <input type="tel" id="home_phone" name="home_phone" placeholder="Home Phone"
                                 class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                                pattern="[0-9]{10}" maxlength="10" data-parsley-maxlength="10"
-                                data-parsley-maxlength-message="Home phone number must be 10 digits."
-                                data-parsley-pattern-message="Home phone number must be 10 digit number."
-                                data-parsley-required="true" data-parsley-required-message="Enter your home phone number."
-                                required
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                onkeydown="return ( event.ctrlKey || event.altKey
-                                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
-                                    || (95<event.keyCode && event.keyCode<106)
-                                    || (event.keyCode==8 || event.keyCode==9
-                                        || event.keyCode==37 || event.keyCode==39 || event.keyCode==46)
-                                    )
-                                    && event.keyCode!=110">
+                                pattern="[0-9]{10}" maxlength="10" required>
                         </div>
                         <div class="w-full">
                             <label for="cell_phone"
@@ -215,26 +204,6 @@
         </div>
     </div>
 
-
-
-    <style>
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50%);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-down {
-            animation: fadeInDown 0.5s ease-out forwards;
-        }
-    </style>
-
     <script type="text/javascript">
         //datatable
         $(document).ready(function() {
@@ -243,6 +212,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             $('#users-table').DataTable({
                 processing: false,
                 serverSide: true,
@@ -253,17 +223,15 @@
                         data: null,
                         orderable: false,
                         searchable: false,
-                        render: function(data, type, full, row) {
-                            return '<input type="checkbox" class="w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" data-id="' +
-                                data.id +
-                                '">';
+                        render: function(data) {
+                            return '<input type="checkbox" class="w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500">';
                         }
                     },
                     {
                         data: 'profile',
                         name: 'profile',
                         orderable: false,
-                        render: function(data, type, full, row) {
+                        render: function(data) {
                             var imagePath = data ? '/storage/' + data :
                                 '{{ asset('images/user.jpg') }}';
                             return '<img class="object-cover w-10 h-10" src="' + imagePath +
@@ -273,22 +241,22 @@
                     {
                         data: 'name',
                         name: 'name',
-                        orderable: false,
+                        orderable: false
                     },
                     {
                         data: 'email',
                         name: 'email',
-                        orderable: false,
+                        orderable: false
                     },
                     {
                         data: 'role_name',
                         name: 'role_name',
-                        orderable: false,
+                        orderable: false
                     },
                     {
                         data: 'created_at',
                         name: 'created_at',
-                        orderable: false,
+                        orderable: false
                     },
                     {
                         data: 'action',
@@ -353,18 +321,14 @@
         });
         //model
         function addUser() {
-            const modal = document.getElementById('user-modal');
-            const modalContent = document.getElementById('modal-content');
-            $('#userModal').html("Add New User");
-            modal.classList.remove('hidden');
-            modalContent.classList.add('fade-in-down');
+            $('#UserModal').html("Add New User");
+            $('#user-modal').removeClass('hidden');
+            $('#modal-content').addClass('fade-in-down');
         }
         //model close
         function closeModal() {
-            const modal = document.getElementById('user-modal');
-            const modalContent = document.getElementById('modal-content');
-            modal.classList.add('hidden');
-            modalContent.classList.remove('fade-in-down');
+            $('#user-modal').addClass('hidden');
+            $('#modal-content').removeClass('fade-in-down');
         }
         //reset model form
         $(document).ready(function() {
@@ -383,12 +347,9 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: (data) => {
+                success: function() {
                     closeModal();
-                    var oTable = $('#users-table').dataTable();
-                    oTable.fnDraw(false);
-                    $("#btn-save").html('Submit');
-                    $("#btn-save").attr("disabled", false);
+                    $('#users-table').DataTable().ajax.reload(null, false);
                 },
                 error: function(data) {
                     console.log(data);
@@ -400,6 +361,36 @@
             errorsWrapper: '<div class="text-red-600 text-sm"></div>',
             errorTemplate: '<span></span>'
         });
+        //edit user ajax
+        function editUserFunc(id) {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                type: "POST",
+                url: "{{ route('admin.manage.users.edit') }}",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#UserModal').html("Edit User");
+                    $('#user-modal').removeClass('hidden');
+                    $('#modal-content').addClass('fade-in-down');
+                    $('#id').val(res.id);
+                    $('#first_name').val(res.first_name);
+                    $('#last_name').val(res.last_name);
+                    $('#email').val(res.email);
+                    $('#role_id').val(res.role_id);
+                    $('#password').val('res.password');
+                    $('#confirm_password').val('res.password');
+                    $('#home_phone').val(res.home_phone);
+                    $('#cell_phone').val(res.cell_phone);
+                    $('#address').val(res.address);
+                }
+            });
+        }
     </script>
 
 @endsection
