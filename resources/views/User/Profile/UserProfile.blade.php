@@ -105,8 +105,10 @@
                                             class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                                             name="first_name" placeholder="First Name"
                                             value="{{ auth()->user()->first_name }}" data-parsley-required="true"
-                                            data-parsley-required-message="First name is required."
-                                            data-parsley-pattern="/^[A-Za-z]+$/"
+                                            data-parsley-required-message="Enter your first name."
+                                            data-parsley-pattern="/^[A-Z][a-z]*$/"
+                                            data-parsley-pattern-message="First letter must be capital."
+                                            data-parsley-pattern-message-class="text-red-500"
                                             data-parsley-pattern-message="First name must contain only letters." required>
                                     </div>
                                     <div class="w-full">
@@ -117,8 +119,10 @@
                                             class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                                             name="last_name" placeholder="Last Name" value="{{ auth()->user()->last_name }}"
                                             data-parsley-required="true"
-                                            data-parsley-required-message="Last name is required."
-                                            data-parsley-pattern="/^[A-Za-z]+$/"
+                                            data-parsley-required-message="Enter your last name."
+                                            data-parsley-pattern="/^[A-Z][a-z]*$/"
+                                            data-parsley-pattern-message="First letter must be capital."
+                                            data-parsley-pattern-message-class="text-red-500"
                                             data-parsley-pattern-message="Last name must contain only letters." required>
                                     </div>
                                 </div>
@@ -128,7 +132,11 @@
                                         Email Address<span class="text-red-500">*</span></label>
                                     <input type="email" readonly="" id="email"
                                         class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                        placeholder="" value="{{ auth()->user()->email }}" required>
+                                        placeholder="" value="{{ auth()->user()->email }}" data-parsley-type="email"
+                                        data-parsley-required="true"
+                                        data-parsley-required-message="Enter your email address."
+                                        data-parsley-pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i"
+                                        data-parsley-pattern-message="Please enter a valid email address." required>
                                 </div>
                                 <div
                                     class="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
@@ -139,11 +147,20 @@
                                         <input type="text" id="home_phone"
                                             class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                                             name="home_phone" placeholder="Home Phone"
-                                            value="{{ auth()->user()->home_phone }}" data-parsley-maxlength="10"
-                                            data-parsley-pattern="^\d{10}$"
-                                            data-parsley-pattern-message="Invalid phone number. Please enter a 10-digit number."
+                                            value="{{ auth()->user()->home_phone }}" pattern="[0-9]{10}" maxlength="10"
+                                            data-parsley-maxlength="10"
+                                            data-parsley-maxlength-message="Home phone number must be 10 digits."
+                                            data-parsley-pattern-message="Home phone number must be 10 digit number."
                                             data-parsley-required="true"
-                                            data-parsley-required-message="Phone number is required." required>
+                                            data-parsley-required-message="Enter your home phone number." required
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                            onkeydown="return ( event.ctrlKey || event.altKey
+                                                || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                                || (95<event.keyCode && event.keyCode<106)
+                                                || (event.keyCode==8 || event.keyCode==9
+                                                    || event.keyCode==37 || event.keyCode==39 || event.keyCode==46)
+                                                )
+                                                && event.keyCode!=110">
                                     </div>
                                     <div class="w-full">
                                         <label for="cell_phone"
@@ -152,8 +169,18 @@
                                         <input type="text" id="cell_phone"
                                             class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                                             name="cell_phone" placeholder="Cell Phone"
-                                            value="{{ auth()->user()->cell_phone }}" data-parsley-pattern="^\d{10}$"
-                                            data-parsley-pattern-message="Invalid phone number. Please enter a 10-digit number.">
+                                            value="{{ auth()->user()->cell_phone }}" pattern="[0-9]{10}" maxlength="10"
+                                            data-parsley-maxlength="10"
+                                            data-parsley-maxlength-message="Cell phone number must be 10 digits."
+                                            data-parsley-pattern-message="Cell phone number must be 10 digit number."
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                            onkeydown="return ( event.ctrlKey || event.altKey
+                                                || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                                || (95<event.keyCode && event.keyCode<106)
+                                                || (event.keyCode==8 || event.keyCode==9
+                                                    || event.keyCode==37 || event.keyCode==39 || event.keyCode==46)
+                                                )
+                                                && event.keyCode!=110">
                                     </div>
                                 </div>
                                 <div class="mb-2 sm:mb-6">
@@ -163,10 +190,7 @@
                                     <input type="text" id="address"
                                         class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                                         name="address" placeholder="Vadodara" value="{{ auth()->user()->address }}"
-                                        data-parsley-pattern="^[a-zA-Z0-9\s\.,&#39;-]*$"
-                                        data-parsley-pattern-message="Please enter valid address"
-                                        data-parsley-required="true" data-parsley-required-message="Address is required."
-                                        required>
+                                        data-parsley-required="true" data-parsley-required-message="Enter your address.">
                                 </div>
                                 <div class="flex justify-end">
                                     <button type="submit"
@@ -189,7 +213,8 @@
                     <div class="flex justify-between">
                         <p class="text-xl font-bold px-12">Crop &amp; Upload</p>
                         <div class="flex justify-end mr-3">
-                            <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
+                            <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close"
+                                style="font-size: 1.5rem;">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -206,11 +231,12 @@
                     </div>
                 </div>
                 <div class="mt-4 flex justify-center">
-                    <button class="px-4 bg-purple-700 py-2 ml-3 rounded-lg text-white hover:bg-purple-500 upload-result">Save</button>
+                    <button
+                        class="px-4 bg-purple-700 py-2 ml-3 rounded-lg text-white hover:bg-purple-500 upload-result">Save</button>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     </div>
 
     <input type="file" id="profile" style="display: none;" accept="image/*">
