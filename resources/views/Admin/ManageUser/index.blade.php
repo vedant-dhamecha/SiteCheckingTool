@@ -7,6 +7,11 @@
             <section class="main-header flex justify-between items-center">
                 <h1 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-users mr-5 ml-8"></i>Manage Users</h1>
                 <div class="flex justify-end">
+                    <a href="javascript:void(0)"
+                        class="clear_db_filters px-6 py-3 bg-gray-600 rounded-md text-white font-medium tracking-wide hover:bg-gray-500 ml-auto mr-3">
+                        <i class="fa-solid fa-filter-circle-xmark mr-3"></i>
+                        <span class="font-plus-jakarta-sans">Clear Filter</span>
+                    </a>
                     <button
                         class="px-6 py-3 bg-blue-600 rounded-md text-white font-medium tracking-wide hover:bg-blue-500  ml-auto">
                         <i class="fa-solid fa-user-plus mr-3"></i>
@@ -122,41 +127,49 @@
                     }
                 },
                 initComplete: function() {
-                var api = this.api();
-                api.columns([2, 3]).every(function() {
-                    var column = this;
-                    var input = $(
-                            '<input type="text" class="w-full mt-2 h-8 text-black pl-4 pr-4 rounded-md form-input focus:border-indigo-600 focus:ring-indigo-600 bg-white border border-gray-300" placeholder="Filter"/>'
-                        )
-                        .appendTo($(column.header()))
-                        .on('input', function() {
-                            shouldSort = false;
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            column.search(val, true, false).draw();
-                        });
-                });
-                api.columns([4]).every(function() {
-                    var column = this;
-                    var select = $(
-                            '<select class="bg-gray-50 w-32 mt-2 h-8 text-black pl-4 pr-4 rounded-md form-input focus:border-indigo-600 focus:ring-indigo-600 bg-white border border-gray-300"><option value="">All</option></select>'
-                        )
-                        .appendTo($(column.header()))
-                        .on('change', function() {
-                            shouldSort = false;
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            if (val === '') {
-                                column.search('').draw();
-                            } else {
-                                var regex = '^' + val + '$';
-                                column.search(regex, true, false).draw();
-                            }
-                        });
-                    column.data().unique().sort().each(function(d, j) {
-                        select.append('<option value="' + d + '">' + d +
-                            '</option>');
+                    var api = this.api();
+                    api.columns([2, 3]).every(function() {
+                        var column = this;
+                        var input = $(
+                                '<input type="text" class="w-full mt-2 h-8 text-black pl-4 pr-4 rounded-md form-input focus:border-indigo-600 focus:ring-indigo-600 bg-white border border-gray-300" placeholder="Filter"/>'
+                            )
+                            .appendTo($(column.header()))
+                            .on('input', function() {
+                                shouldSort = false;
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val, true, false).draw();
+                            });
                     });
-                });
-            }
+                    api.columns([4]).every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select class="bg-gray-50 w-32 mt-2 h-8 text-black pl-4 pr-4 rounded-md form-input focus:border-indigo-600 focus:ring-indigo-600 bg-white border border-gray-300"><option value="">All</option></select>'
+                            )
+                            .appendTo($(column.header()))
+                            .on('change', function() {
+                                shouldSort = false;
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                if (val === '') {
+                                    column.search('').draw();
+                                } else {
+                                    var regex = '^' + val + '$';
+                                    column.search(regex, true, false).draw();
+                                }
+                            });
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d +
+                                '</option>');
+                        });
+                    });
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('.clear_db_filters').click(function() {
+                var table = $('#users-table')
+                    .DataTable();
+                table.search('').columns().search('').draw();
             });
         });
     </script>
