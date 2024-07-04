@@ -49,7 +49,7 @@
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
                                 <div class="flex items-center">
                                     <input type="checkbox" id="select-all-checkbox"
-                                        class="w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        class="form-checkbox h-5 w-5 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 </div>
                             </th>
                             <th class="py-3 px-5 bg-indigo-800 font-medium uppercase text-sm text-gray-100">
@@ -262,7 +262,7 @@
                         orderable: false,
                         searchable: false,
                         render: function(data) {
-                            return '<input type="checkbox" class="checkbox w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500" data-id="' +
+                            return '<input type="checkbox" class="form-checkbox h-5 w-5 checkbox w-4 h-4 text-yellow-600 bg-gray-300 border-gray-300 rounded focus:ring-yellow-500" data-id="' +
                                 data + '">';
                         }
                     },
