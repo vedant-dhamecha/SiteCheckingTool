@@ -23,17 +23,6 @@ class ServeCommand extends Command
     protected $name = 'serve';
 
     /**
-     * The name of the console command.
-     *
-     * This name is used to identify the command during lazy loading.
-     *
-     * @var string|null
-     *
-     * @deprecated
-     */
-    protected static $defaultName = 'serve';
-
-    /**
      * The console command description.
      *
      * @var string
@@ -68,6 +57,7 @@ class ServeCommand extends Command
      */
     public static $passthroughVariables = [
         'APP_ENV',
+        'IGNITION_LOCAL_SITES_PATH',
         'LARAVEL_SAIL',
         'PATH',
         'PHP_CLI_SERVER_WORKERS',
@@ -262,9 +252,12 @@ class ServeCommand extends Command
                 $this->requestsPool[$requestPort][1] = trim(explode('[200]: GET', $line)[1]);
             } elseif (str($line)->contains(' Closing')) {
                 $requestPort = $this->getRequestPortFromLine($line);
-                $request = $this->requestsPool[$requestPort];
 
-                [$startDate, $file] = $request;
+                if (empty($this->requestsPool[$requestPort])) {
+                    return;
+                }
+
+                [$startDate, $file] = $this->requestsPool[$requestPort];
 
                 $formattedStartedAt = $startDate->format('Y-m-d H:i:s');
 
@@ -304,8 +297,6 @@ class ServeCommand extends Command
         $regex = env('PHP_CLI_SERVER_WORKERS', 1) > 1
             ? '/^\[\d+]\s\[([a-zA-Z0-9: ]+)\]/'
             : '/^\[([^\]]+)\]/';
-
-        $line = str_replace('  ', ' ', $line);
 
         preg_match($regex, $line, $matches);
 

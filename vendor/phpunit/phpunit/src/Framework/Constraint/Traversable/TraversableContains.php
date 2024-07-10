@@ -10,29 +10,22 @@
 namespace PHPUnit\Framework\Constraint;
 
 use function is_array;
-
 use function sprintf;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  */
 abstract class TraversableContains extends Constraint
 {
-    /**
-     * @var mixed
-     */
-    private $value;
+    private readonly mixed $value;
 
-    public function __construct($value)
+    public function __construct(mixed $value)
     {
         $this->value = $value;
     }
 
     /**
      * Returns a string representation of the constraint.
-     *
-     * @throws InvalidArgumentException
      */
     public function toString(): string
     {
@@ -44,12 +37,8 @@ abstract class TraversableContains extends Constraint
      *
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
-     *
-     * @param mixed $other evaluated value or object
-     *
-     * @throws InvalidArgumentException
      */
-    protected function failureDescription($other): string
+    protected function failureDescription(mixed $other): string
     {
         return sprintf(
             '%s %s',
@@ -58,7 +47,7 @@ abstract class TraversableContains extends Constraint
         );
     }
 
-    protected function value()
+    protected function value(): mixed
     {
         return $this->value;
     }

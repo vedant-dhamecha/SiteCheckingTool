@@ -21,7 +21,7 @@ final class EnglishInflector implements InflectorInterface
     private const PLURAL_MAP = [
         // First entry: plural suffix, reversed
         // Second entry: length of plural suffix
-        // Third entry: Whether the suffix may succeed a vowel
+        // Third entry: Whether the suffix may succeed a vocal
         // Fourth entry: Whether the suffix may succeed a consonant
         // Fifth entry: singular suffix, normal
 
@@ -94,9 +94,6 @@ final class EnglishInflector implements InflectorInterface
         // accesses (access), addresses (address), kisses (kiss)
         ['sess', 4, true, false, 'ss'],
 
-        // statuses (status)
-        ['sesutats', 8, true, true, 'status'],
-
         // analyses (analysis), ellipses (ellipsis), fungi (fungus),
         // neuroses (neurosis), theses (thesis), emphases (emphasis),
         // oases (oasis), crises (crisis), houses (house), bases (base),
@@ -141,9 +138,6 @@ final class EnglishInflector implements InflectorInterface
         // shoes (shoe)
         ['se', 2, true, true, ['', 'e']],
 
-         // status (status)
-        ['sutats', 6, true, true, 'status'],
-
         // tags (tag)
         ['s', 1, true, true, ''],
 
@@ -162,12 +156,9 @@ final class EnglishInflector implements InflectorInterface
     private const SINGULAR_MAP = [
         // First entry: singular suffix, reversed
         // Second entry: length of singular suffix
-        // Third entry: Whether the suffix may succeed a vowel
+        // Third entry: Whether the suffix may succeed a vocal
         // Fourth entry: Whether the suffix may succeed a consonant
         // Fifth entry: plural suffix, normal
-
-        // axes (axis)
-        ['sixa', 4, false, false, 'axes'],
 
         // criterion (criteria)
         ['airetirc', 8, false, false, 'criterion'],
@@ -238,9 +229,6 @@ final class EnglishInflector implements InflectorInterface
         // teeth (tooth)
         ['htoot', 5, true, true, 'teeth'],
 
-        // albums (album)
-        ['mubla', 5, true, true, 'albums'],
-
         // bacteria (bacterium), criteria (criterion), phenomena (phenomenon)
         ['mu', 2, true, true, 'a'],
 
@@ -258,9 +246,6 @@ final class EnglishInflector implements InflectorInterface
 
         // seasons (season), treasons (treason), poisons (poison), lessons (lesson)
         ['nos', 3, true, true, 'sons'],
-
-        // icons (icon)
-        ['noc', 3, true, true, 'cons'],
 
         // bacteria (bacterium), criteria (criterion), phenomena (phenomenon)
         ['no', 2, true, true, 'a'],
@@ -293,15 +278,6 @@ final class EnglishInflector implements InflectorInterface
 
         // circuses (circus)
         ['suc', 3, true, true, 'cuses'],
-
-        // hippocampi (hippocampus)
-        ['supmacoppih', 11, false, false, 'hippocampi'],
-
-        // campuses (campus)
-        ['sup', 3, true, true, 'puses'],
-
-        // status (status)
-        ['sutats', 6, true, true, ['status', 'statuses']],
 
         // conspectuses (conspectus), prospectuses (prospectus)
         ['sutcep', 6, true, true, 'pectuses'],
@@ -358,29 +334,14 @@ final class EnglishInflector implements InflectorInterface
         // deer
         'reed',
 
-        // equipment
-        'tnempiuqe',
-
         // feedback
         'kcabdeef',
 
         // fish
         'hsif',
 
-        // health
-        'htlaeh',
-
-        // history
-        'yrotsih',
-
         // info
         'ofni',
-
-        // information
-        'noitamrofni',
-
-        // money
-        'yenom',
 
         // moose
         'esoom',
@@ -393,15 +354,6 @@ final class EnglishInflector implements InflectorInterface
 
         // species
         'seiceps',
-
-        // traffic
-        'ciffart',
-
-        // aircraft
-        'tfarcria',
-
-        // hardware
-        'erawdrah',
     ];
 
     public function singularize(string $plural): array
@@ -435,14 +387,14 @@ final class EnglishInflector implements InflectorInterface
                 if ($j === $suffixLength) {
                     // Is there any character preceding the suffix in the plural string?
                     if ($j < $pluralLength) {
-                        $nextIsVowel = str_contains('aeiou', $lowerPluralRev[$j]);
+                        $nextIsVocal = str_contains('aeiou', $lowerPluralRev[$j]);
 
-                        if (!$map[2] && $nextIsVowel) {
-                            // suffix may not succeed a vowel but next char is one
+                        if (!$map[2] && $nextIsVocal) {
+                            // suffix may not succeed a vocal but next char is one
                             break;
                         }
 
-                        if (!$map[3] && !$nextIsVowel) {
+                        if (!$map[3] && !$nextIsVocal) {
                             // suffix may not succeed a consonant but next char is one
                             break;
                         }
@@ -512,14 +464,14 @@ final class EnglishInflector implements InflectorInterface
                 if ($j === $suffixLength) {
                     // Is there any character preceding the suffix in the plural string?
                     if ($j < $singularLength) {
-                        $nextIsVowel = str_contains('aeiou', $lowerSingularRev[$j]);
+                        $nextIsVocal = str_contains('aeiou', $lowerSingularRev[$j]);
 
-                        if (!$map[2] && $nextIsVowel) {
-                            // suffix may not succeed a vowel but next char is one
+                        if (!$map[2] && $nextIsVocal) {
+                            // suffix may not succeed a vocal but next char is one
                             break;
                         }
 
-                        if (!$map[3] && !$nextIsVowel) {
+                        if (!$map[3] && !$nextIsVocal) {
                             // suffix may not succeed a consonant but next char is one
                             break;
                         }

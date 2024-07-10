@@ -1,66 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Uptime Monitor
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Uptime Monitor is a self-hosted web monitoring tool, built with laravel.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Monitor your web uptime per minutes (or any time interval)
+- Record response time on each web
+- Show uptime badges in 3 colors: green for up, yellow for warning, red for down, based on response time
+- Send telegram notification when you site down for 5 minutes (based on check periode)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Why I need this?
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Open-source, modify as you need
+- Self-hosted, deploy on your own server
+- Store and control your monitoring logs yourself
+- Let you know when your websites are down
+- For freelancer/agency, increase your client's trust because you monitor their website
 
-## Learning Laravel
+## How to Install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Server Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+This application can be installed on local server and online server with these specifications:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. PHP 8.1 (and meet [Laravel 10.x requirements](https://laravel.com/docs/10.x/deployment#server-requirements)).
+2. MySQL or MariaDB Database.
+3. SQLite (for automated testing).
 
-## Laravel Sponsors
+### Installation Steps
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+1. Clone repository: `git clone https://github.com/nafiesl/uptime-monitor.git`
+1. `$ cd uptime-monitor`
+1. Install PHP dependencies: `$ composer install`
+1. Install javscript dependencies: `$ npm install`
+1. Copy `.env.example` to `.env`: `$ cp .env.example .env`
+1. Generate application key: `$ php artisan key:generate`
+1. Create a MySQL or MariaDB database.
+1. Configure database and environment variables `.env`.
+    ```
+    APP_URL=http://localhost:8000
+    APP_TIMEZOME="Asia/Jakarta"
 
-### Premium Partners
+    DB_DATABASE=homestead
+    DB_USERNAME=homestead
+    DB_PASSWORD=secret
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    TELEGRAM_NOTIFER_TOKEN=
+    ```
+1. Run database migration: `$ php artisan migrate --seed`
+1. Build assets: `$ npm run build`
+1. Run task scheduler: `$ php artisan schedule:work`
+1. Start server in a separeted terminal tab: `$ php artisan serve`
+1. Open the web app: http://localhost:8000.
+1. Login using default user credential:
+    - Email: `admin@example.net`
+    - Password: `password`
+1. Go to **Customer Site** menu.
+1. Add some new customer sites (name and URL).
+1. After adding customer sites, go to **Dashboard**
+1. Click **Start Monitoring** to update the uptime badge per minute.
 
-## Contributing
+### Telegram Notifier Setup
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+In order to get notified in Telegram when the customer sites are down, we need to use a Telegram Bot and a Chat ID
 
-## Code of Conduct
+1. Create a Telegram Bot ([how to](https://gist.github.com/nafiesl/4ad622f344cd1dc3bb1ecbe468ff9f8a#create-a-telegram-bot-and-get-a-bot-token))
+1. Get a Chat ID of the Telegram Bot ([how to](https://gist.github.com/nafiesl/4ad622f344cd1dc3bb1ecbe468ff9f8a#get-chat-id-for-a-private-chat))
+1. Update `.env` file, set `TELEGRAM_NOTIFER_TOKEN=your_telegram_bot_token`
+1. Set our Chat ID in the Profile Page.
+    - Go to User Profile Menu
+    - Click Edit Profile
+    - Fill the Telegram Chat ID field with `your_chat_id`
+    - Click Update Profile
+    - Click **Test Telegram Chat** to test the telegram configuration
+1. By default, we will have **5 minutes** inteval when the customer sites are down. But we can change the interval per customer sites.
+    - Go to Customer Site menu
+    - Select one of the customer site and click Edit link
+    - Set the Notify User Interval field, between 0 to 60.
+    - Set the Notify User Interval field to 0 if you don't want to get notified.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Screenshot
 
-## Security Vulnerabilities
+#### Dashboard
+![screen_2023-12-20_004](https://github.com/nafiesl/uptime-monitor/assets/8721551/7b115df3-f2c0-467e-ba1e-b488c0452bc1)
+#### Dashboard in mobile device
+![screen_2023-12-20_009](https://github.com/nafiesl/uptime-monitor/assets/8721551/11173d6f-437d-49b0-a509-2ddeb7e69b7e)
+#### Monitoring graph on customer site detail
+![screen_2023-12-20_005](https://github.com/nafiesl/uptime-monitor/assets/8721551/4f412aaf-8848-484b-8ad8-a625898ea187)
+#### Monitoring log tab on customer site detail
+![screen_2023-12-20_006](https://github.com/nafiesl/uptime-monitor/assets/8721551/2cbbda3c-a13c-4818-8ab7-25ca0ad04b53)
+#### User profile menu
+![screen_2023-12-20_007](https://github.com/nafiesl/uptime-monitor/assets/8721551/6f352dc4-bfbe-4b1a-8d0e-ee5df4e97ca1)
+#### Telegram notification sample
+![screen_2023-12-20_008](https://github.com/nafiesl/uptime-monitor/assets/8721551/15ebca99-d920-4764-a567-06e2e1b748df)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Lisensi
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Uptime Monitor project is an open-sourced software licensed under the [Lisensi MIT](LICENSE).
