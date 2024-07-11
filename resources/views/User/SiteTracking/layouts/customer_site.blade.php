@@ -6,14 +6,7 @@
     <div class="row p-3">
         <div class="col-md-4 order-2 order-md-1">
             <div class="card p-2">
-                <div class="card-header">
-                    <div class="float-end">
-                        {{-- <form action="{{ route('customer_sites.check_now', $customerSite->id) }}" method="get">
-                            <button type="submit" class="btn btn-success" id="check_now_{{ $customerSite->id }}">
-                                {{ __('customer_site.check_now') }}
-                            </button>
-                        </form> --}}
-                    </div>
+                <div class="card-header mb-3">
                     <h2 class="text-3xl font-semibold text-white">{{ __('customer_site.customer_site') }}</h2>
                 </div>
                 <div class="card-body">
@@ -83,16 +76,18 @@
                                 <td class="text-white">{{ __('app.updated_at') }}</td>
                                 <td class="text-white">{{ $customerSite->updated_at }}</td>
                             </tr>
+                            <tr>
+                                <td class="text-white">Up Time</td>
+                                <td class="text-white"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-white">Down Time</td>
+                                <td class="text-white"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer mt-5">
-                    {{-- @can('update', $customerSite)
-                        <a href="{{ route('customer_sites.edit', $customerSite) }}" class="btn btn-warning float-right"
-                            id="edit-customer_site-{{ $customerSite->id }}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                    @endcan --}}
                     <a href="{{ route('home') }}" class="btn btn-primary float-left">
                         <i class="fa-solid fa-arrow-left mr-2"></i> Dashboard
                     </a>

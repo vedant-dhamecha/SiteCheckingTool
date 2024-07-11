@@ -91,7 +91,7 @@
                 }
             },
             stroke: {
-                width: [2]
+                width: [3]
             },
             tooltip: {
                 x: {
