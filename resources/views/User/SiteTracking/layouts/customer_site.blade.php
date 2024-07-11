@@ -75,15 +75,15 @@
                             <tr>
                                 <td class="text-white items-center justify-center">{{ __('app.status') }}</td>
                                 <td class="text-white">
-                                    @if ($customerSite->is_active == 1)
+                                    @if ($totalUptime > $totalDowntime)
                                         <div
-                                            class="btn btn-sm bg-success ml-2 h-8 w-16 flex items-center justify-center text-white">
+                                            class="btn btn-sm bg-success ml-2 h-8 w-20 flex items-center justify-center text-white">
                                             <i class="fa-solid fa-arrow-up mr-2"></i>UP
                                         </div>
                                     @else
                                         <div
-                                            class="btn btn-sm bg-success ml-2 h-8 w-16 flex items-center justify-center text-white">
-                                            <i class="fa-solid fa-arrow-up mr-2">Down
+                                            class="btn btn-sm bg-danger ml-2 h-8 w-20 flex items-center justify-center text-white">
+                                            <i class="fa-solid fa-arrow-down mr-2"></i>Down
                                         </div>
                                     @endif
                                 </td>
@@ -93,7 +93,7 @@
                                 <td class="text-white">
                                     @if ($totalUptime > $totalDowntime)
                                         @php
-                                            $seconds = $totalUptime;
+                                            $seconds = $totalDowntime;
                                             $days = floor($seconds / 86400);
                                             $hours = floor(($seconds - $days * 86400) / 3600);
                                             $minutes = floor(($seconds - $days * 86400 - $hours * 3600) / 60);
