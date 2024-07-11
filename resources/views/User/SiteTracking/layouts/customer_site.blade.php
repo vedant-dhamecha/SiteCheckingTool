@@ -91,9 +91,9 @@
                             <tr>
                                 <td class="text-white">Up Time</td>
                                 <td class="text-white">
-                                    @if ($uptime > 0)
+                                    @if ($totalUptime > $totalDowntime)
                                         @php
-                                            $seconds = $uptime;
+                                            $seconds = $totalUptime;
                                             $days = floor($seconds / 86400);
                                             $hours = floor(($seconds - $days * 86400) / 3600);
                                             $minutes = floor(($seconds - $days * 86400 - $hours * 3600) / 60);
@@ -115,9 +115,9 @@
                             <tr>
                                 <td class="text-white">Down Time</td>
                                 <td class="text-white">
-                                    @if ($downtime > 0)
+                                    @if ($totalDowntime > $totalUptime)
                                         @php
-                                            $seconds = $downtime;
+                                            $seconds = $totalDowntime;
                                             $days = floor($seconds / 86400);
                                             $hours = floor(($seconds - $days * 86400) / 3600);
                                             $minutes = floor(($seconds - $days * 86400 - $hours * 3600) / 60);

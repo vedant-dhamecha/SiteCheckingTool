@@ -36,6 +36,41 @@ class CustomerSiteController extends Controller
             $endTime = Carbon::parse($request->input('end_time'));
         }
 
+        // Calculate uptime and downtime for the last 6 months
+        $sixMonthsAgo = Carbon::now()->subMonths(6);
+        $uptimeDowntimeLogs = DB::table('monitoring_logs')
+            ->where('customer_site_id', $customerSite->id)
+            ->whereBetween('created_at', [$sixMonthsAgo, $endTime])
+            ->orderBy('created_at', 'asc')
+            ->get(['response_time', 'created_at']);
+
+        $totalUptime = 0;
+        $totalDowntime = 0;
+        $previousLog = null;
+
+        foreach ($uptimeDowntimeLogs as $log) {
+            if ($previousLog) {
+                $duration = Carbon::parse($log->created_at)->diffInSeconds(Carbon::parse($previousLog->created_at));
+                if ($previousLog->response_time <= $customerSite->down_threshold) {
+                    $totalUptime += $duration;
+                } else {
+                    $totalDowntime += $duration;
+                }
+            }
+            $previousLog = $log;
+        }
+
+        // Calculate duration from the last log entry to the current time if needed
+        if ($previousLog) {
+            $duration = Carbon::now()->diffInSeconds(Carbon::parse($previousLog->created_at));
+            if ($previousLog->response_time <= $customerSite->down_threshold) {
+                $totalUptime += $duration;
+            } else {
+                $totalDowntime += $duration;
+            }
+        }
+
+        // Fetch logs for the selected time range
         $logQuery = DB::table('monitoring_logs')
             ->where('customer_site_id', $customerSite->id)
             ->whereBetween('created_at', [$startTime, $endTime]);
@@ -46,28 +81,12 @@ class CustomerSiteController extends Controller
             $monitoringLogs = $logQuery->get(['response_time', 'created_at']);
         }
 
-        $uptime = 0;
-        $downtime = 0;
-        $previousLog = null;
-
-        foreach ($monitoringLogs as $log) {
-            if ($previousLog) {
-                $duration = Carbon::parse($log->created_at)->diffInSeconds(Carbon::parse($previousLog->created_at));
-                if ($previousLog->response_time <= $customerSite->down_threshold) {
-                    $uptime += $duration;
-                } else {
-                    $downtime += $duration;
-                }
-            }
-            $previousLog = $log;
-        }
-
         $chartData = [];
         foreach ($monitoringLogs as $monitoringLog) {
             $chartData[] = ['x' => $monitoringLog->created_at, 'y' => $monitoringLog->response_time];
         }
 
-        return compact('customerSite', 'monitoringLogs', 'chartData', 'startTime', 'endTime', 'timeRange', 'uptime', 'downtime');
+        return compact('customerSite', 'monitoringLogs', 'chartData', 'startTime', 'endTime', 'timeRange', 'totalUptime', 'totalDowntime');
     }
 
     private function getStartTimeByTimeRange(string $timeRange): Carbon
