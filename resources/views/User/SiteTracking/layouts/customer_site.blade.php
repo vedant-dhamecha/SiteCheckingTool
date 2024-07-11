@@ -26,10 +26,6 @@
                                 <td class="text-white">{{ $customerSite->vendor->name }}</td>
                             </tr>
                             <tr>
-                                <td class="text-white">{{ __('app.status') }}</td>
-                                <td class="text-white">{{ $customerSite->is_active }}</td>
-                            </tr>
-                            <tr>
                                 <td class="text-white">{{ __('customer_site.check_interval') }}</td>
                                 <td class="text-white">
                                     {{ __('time.every') }}
@@ -77,12 +73,68 @@
                                 <td class="text-white">{{ $customerSite->updated_at }}</td>
                             </tr>
                             <tr>
+                                <td class="text-white items-center justify-center">{{ __('app.status') }}</td>
+                                <td class="text-white">
+                                    @if ($customerSite->is_active == 1)
+                                        <div
+                                            class="btn btn-sm bg-success ml-2 h-8 w-16 flex items-center justify-center text-white">
+                                            <i class="fa-solid fa-arrow-up mr-2"></i>UP
+                                        </div>
+                                    @else
+                                        <div
+                                            class="btn btn-sm bg-success ml-2 h-8 w-16 flex items-center justify-center text-white">
+                                            <i class="fa-solid fa-arrow-up mr-2">Down
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="text-white">Up Time</td>
-                                <td class="text-white"></td>
+                                <td class="text-white">
+                                    @if ($uptime > 0)
+                                        @php
+                                            $seconds = $uptime;
+                                            $days = floor($seconds / 86400);
+                                            $hours = floor(($seconds - $days * 86400) / 3600);
+                                            $minutes = floor(($seconds - $days * 86400 - $hours * 3600) / 60);
+                                            $seconds = $seconds % 60;
+                                            echo $days .
+                                                ' Days ' .
+                                                $hours .
+                                                ' H ' .
+                                                $minutes .
+                                                ' Min ' .
+                                                $seconds .
+                                                ' Sec';
+                                        @endphp
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-white">Down Time</td>
-                                <td class="text-white"></td>
+                                <td class="text-white">
+                                    @if ($downtime > 0)
+                                        @php
+                                            $seconds = $downtime;
+                                            $days = floor($seconds / 86400);
+                                            $hours = floor(($seconds - $days * 86400) / 3600);
+                                            $minutes = floor(($seconds - $days * 86400 - $hours * 3600) / 60);
+                                            $seconds = $seconds % 60;
+                                            echo $days .
+                                                ' Days ' .
+                                                $hours .
+                                                ' H ' .
+                                                $minutes .
+                                                ' Min ' .
+                                                $seconds .
+                                                ' Sec';
+                                        @endphp
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>
