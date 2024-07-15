@@ -65,7 +65,7 @@
                 <a href="{{ route('admin.password') }}"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
                     role="menuitem"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+                <a href="{{ route('admin.sitesetting') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
                     role="menuitem"><i class="fa-solid fa-gear mr-2"></i>Site Settings</a>
                 <a href="{{ route('admin.logout') }}"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"

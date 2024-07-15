@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\UserManageTableController;
 use App\Http\Controllers\Auth\ProfileController;
 
@@ -90,3 +91,5 @@ Route::post('admin/manage/users/store', [UserManageTableController::class, 'stor
 Route::post('admin/manage/users/edit', [UserManageTableController::class, 'edit'])->middleware('admin')->name('admin.manage.users.edit');
 Route::post('admin/manage/users/destroy', [UserManageTableController::class, 'destroy'])->middleware('admin')->name('admin.manage.users.destroy');
 Route::post('admin/manage/users//delete-selected', [UserManageTableController::class, 'deleteSelected'])->middleware('admin')->name('admin.manage.users.delete-selected');
+
+Route::get('admin/sitesetting', [SiteSettingController::class,'index'])->middleware('admin')->name('admin.sitesetting');

@@ -34,6 +34,11 @@
                     <i class="fa-solid fa-key px-2 mr-2"></i>
                     Change Password
                 </a>
+                <a href="{{ route('admin.sitesetting') }}"
+                    class="flex items-center px-3 py-2.5 font-semibold hover:text-indigo-900 hover:border hover:rounded-full">
+                    <i class="fa-solid fa-gear mr-2 ml-2"></i>
+                    Site Settings
+                </a>
             </div>
         </aside>
         <main class="w-full min-h-screen py-1 md:w-2/3 lg:w-3/4">
