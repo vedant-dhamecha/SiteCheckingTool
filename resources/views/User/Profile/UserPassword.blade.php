@@ -6,6 +6,12 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
     </style>
+    <!-- sweet alert ttitle color -->
+    <style>
+        .custom-toast .swal2-title {
+            color: #ffffff !important;
+        }
+    </style>
     <div class="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
         <aside class="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
             <div class="sticky flex flex-col gap-2 p-4 text-sm border-r border-indigo-100 top-12">
@@ -89,6 +95,46 @@
             $('#formChangePass').parsley({
                 errorsWrapper: '<div class="text-red-600 text-sm"></div>',
                 errorTemplate: '<span></span>'
+            });
+        });
+    </script>
+    <script>
+        $('#formChangePass').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('user.password.update') }}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function() {
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: 'Password updated successfully',
+                        background: '#28a745', // Green background color
+                        iconColor: '#ffffff', // White icon color
+                        animation: false,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: 'custom-toast'
+                        },
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                },
+                error: function(data) {
+                    // console.log(data);
+                    // Display error message
+                    // alert('An error occurred while processing your request. Please try again.');
+                }
             });
         });
     </script>

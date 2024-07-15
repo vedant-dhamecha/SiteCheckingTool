@@ -18,6 +18,12 @@
             animation: fadeInDown 0.5s ease-out forwards;
         }
     </style>
+    <!-- sweet alert ttitle color -->
+    <style>
+        .custom-toast .swal2-title {
+            color: #ffffff !important;
+        }
+    </style>
     <main class="content px-20 py-8">
         <section class="main-header flex justify-between items-center">
             <h1 class="text-3xl font-bold text-gray-800 ml-10">Manage Customer Sites</h1>
@@ -301,6 +307,25 @@
                 success: function() {
                     closeModal();
                     $('#customersite-table').DataTable().ajax.reload(null, false);
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: 'Customer Site added or updated successfully',
+                        background: '#28a745', // Green background color
+                        iconColor: '#ffffff', // White icon color
+                        animation: false,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: 'custom-toast'
+                        },
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
                 },
                 error: function(data) {
                     // console.log(data);
@@ -370,6 +395,25 @@
                         success: function(res) {
                             var oTable = $('#customersite-table').dataTable();
                             oTable.fnDraw(false);
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Customer site deleted successfully',
+                                background: '#28a745', // Green background color
+                                iconColor: '#ffffff', // White icon color
+                                animation: false,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                customClass: {
+                                    popup: 'custom-toast'
+                                },
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
                         }
                     });
                 }
@@ -421,6 +465,25 @@
                         },
                         success: function(response) {
                             $('#customersite-table').DataTable().ajax.reload();
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Selected Customer Sites deleted successfully',
+                                background: '#28a745', // Green background color
+                                iconColor: '#ffffff', // White icon color
+                                animation: false,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                customClass: {
+                                    popup: 'custom-toast'
+                                },
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);

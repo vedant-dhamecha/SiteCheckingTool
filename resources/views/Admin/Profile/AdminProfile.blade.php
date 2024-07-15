@@ -39,6 +39,12 @@
             /* Below modal but above other content */
         }
     </style>
+    <!-- sweet alert ttitle color -->
+    <style>
+        .custom-toast .swal2-title {
+            color: #ffffff !important;
+        }
+    </style>
 
     <div class="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
         <aside class="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
@@ -318,6 +324,46 @@
 
                 localStorage.removeItem('showSweetAlert');
             }
+        });
+    </script>
+     <script>
+        $('#profileForm').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('admin.profile.update') }}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function() {
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: 'Admin Profile updated successfully',
+                        background: '#28a745', // Green background color
+                        iconColor: '#ffffff', // White icon color
+                        animation: false,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: 'custom-toast'
+                        },
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                },
+                error: function(data) {
+                    // console.log(data);
+                    // Display error message
+                    // alert('An error occurred while processing your request. Please try again.');
+                }
+            });
         });
     </script>
 

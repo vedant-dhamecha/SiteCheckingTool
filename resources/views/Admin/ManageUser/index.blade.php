@@ -18,6 +18,12 @@
             animation: fadeInDown 0.5s ease-out forwards;
         }
     </style>
+    <!-- sweet alert ttitle color -->
+    <style>
+        .custom-toast .swal2-title {
+            color: #ffffff !important;
+        }
+    </style>
     <main class="container mx-auto p-2">
         <div class="content">
             <section class="main-header flex justify-between items-center">
@@ -389,6 +395,25 @@
                 success: function() {
                     closeModal();
                     $('#users-table').DataTable().ajax.reload(null, false);
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: 'User added or updated successfully',
+                        background: '#28a745', // Green background color
+                        iconColor: '#ffffff', // White icon color
+                        animation: false,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: 'custom-toast'
+                        },
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
                 },
                 error: function(data) {
                     console.log(data);
@@ -456,6 +481,25 @@
                         success: function(res) {
                             var oTable = $('#users-table').dataTable();
                             oTable.fnDraw(false);
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'User deleted successfully',
+                                background: '#28a745', // Green background color
+                                iconColor: '#ffffff', // White icon color
+                                animation: false,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                customClass: {
+                                    popup: 'custom-toast'
+                                },
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
                         }
                     });
                 }
@@ -507,6 +551,25 @@
                         },
                         success: function(response) {
                             $('#users-table').DataTable().ajax.reload();
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Selected users deleted successfully',
+                                background: '#28a745', // Green background color
+                                iconColor: '#ffffff', // White icon color
+                                animation: false,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                customClass: {
+                                    popup: 'custom-toast'
+                                },
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);

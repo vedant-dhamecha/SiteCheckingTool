@@ -18,6 +18,12 @@
             animation: fadeInDown 0.5s ease-out forwards;
         }
     </style>
+    <!-- sweet alert ttitle color -->
+    <style>
+        .custom-toast .swal2-title {
+            color: #ffffff !important;
+        }
+    </style>
     <main class="content px-20 py-8">
         <section class="main-header flex justify-between items-center">
             <h1 class="text-3xl font-bold text-gray-800 ml-10">Manage Vendors</h1>
@@ -224,6 +230,25 @@
                 success: function() {
                     closeModal();
                     $('#vendors-table').DataTable().ajax.reload(null, false);
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: 'Vendor added or updated successfully',
+                        background: '#28a745', // Green background color
+                        iconColor: '#ffffff', // White icon color
+                        animation: false,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: 'custom-toast'
+                        },
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
                 },
                 error: function(data) {
                     // console.log(data);
@@ -287,6 +312,25 @@
                         success: function(res) {
                             var oTable = $('#vendors-table').dataTable();
                             oTable.fnDraw(false);
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Vendor deleted successfully',
+                                background: '#28a745', // Green background color
+                                iconColor: '#ffffff', // White icon color
+                                animation: false,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                customClass: {
+                                    popup: 'custom-toast'
+                                },
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
                         }
                     });
                 }
@@ -338,13 +382,32 @@
                         },
                         success: function(response) {
                             $('#vendors-table').DataTable().ajax.reload();
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Selected vendors deleted successfully',
+                                background: '#28a745', // Green background color
+                                iconColor: '#ffffff', // White icon color
+                                animation: false,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                customClass: {
+                                    popup: 'custom-toast'
+                                },
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);
                         }
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your records are safe', 'error');
+                    //Swal.fire('Cancelled', 'Your records are safe', 'error');
                 }
             });
         }
